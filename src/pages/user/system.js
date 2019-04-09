@@ -70,10 +70,11 @@ export default class System extends React.Component {
                     onClick: this.toAdd
                 },
             ],
-            showSearch: false,
+            searchFields: 'username:like',
+            searchPlaceholder: 'User name',
             history: this.props.history,
             page: 1,
-            pageSize: 10,
+            pageSize: 5,
         },
         modalVisible: false,
         type: null
