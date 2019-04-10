@@ -1,9 +1,3 @@
-/**
- * FileName: basic
- * Auth: Linn
- * Created at: 2018/8/2
- * Description:
- */
 import React from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router-dom';

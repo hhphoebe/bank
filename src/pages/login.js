@@ -1,9 +1,3 @@
-/**
- * FileName: login
- * Auth: Linn
- * Created at: 2018/7/31
- * Description:
- */
 import React from 'react';
 import { render } from 'react-dom';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
@@ -20,10 +14,8 @@ class LoginForm extends React.Component {
 		e.preventDefault();
 		this.props.form.validateFields((err, values) => {
 			if (!err) {
-				// console.log('values',values)
 				this.setState({ loading: true });
 				let req = {...values, password: md5(values.password)};
-				// console.log("req",req);
 				login(this.props.history, req)
 					.then((res)=> {
 						this.setState({ loading: false });
