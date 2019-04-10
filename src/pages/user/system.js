@@ -31,34 +31,34 @@ export default class System extends React.Component {
             rowKey: 'id',
             columns: [
                 {
-                    title: 'loginName',
+                    title: '账号',
                     dataIndex: 'loginName',
                     key: 'loginName'
                 },
                 {
-                    title: 'gmtCreate',
+                    title: '创建时间',
                     dataIndex: 'gmtCreate',
                     key: 'gmtCreate'
                 },
                 {
-                    title: 'lastIp',
+                    title: '前次登录ip',
                     dataIndex: 'lastIp',
                     key: 'lastIp'
                 },
                 {
-                    title: 'lastTime',
+                    title: '前次登录时间',
                     dataIndex: 'lastTime',
                     key: 'lastTime'
                 },
                 {
-                    title: 'Operating',
+                    title: '操作',
                     dataIndex: 'Operating',
                     key: 'Operating',
                     render: (a, item, index) => {
                         return (
                             <div className="action-list" key={item.loginName + 'opara' + index}>
-                                <a href="javascript:;" onClick={this.toEdit.bind(this, item)}>Edit</a>
-                                <a href="javascript:;" onClick={this.toDelete.bind(this, item.id)}>Delete</a>
+                                <a href="javascript:;" onClick={this.toEdit.bind(this, item)}>编辑</a>
+                                <a href="javascript:;" onClick={this.toDelete.bind(this, item.id)}>删除</a>
                             </div>
                         )
                     }
@@ -74,10 +74,10 @@ export default class System extends React.Component {
                 },
             ],
             search: "",
-            searchPlaceholder: 'LoginName',
+            searchPlaceholder: '搜索',
             history: this.props.history,
             page: 1,
-            pageSize: 10,
+            pageSize: 5,
         },
         modalVisible: false,
         type: null,
@@ -115,7 +115,7 @@ export default class System extends React.Component {
                         .then((res) => {
                             if (!!res) {
                                 Modal.success({
-                                    title: '添加成功！',
+                                    title: '编辑成功！',
                                     onOk: () => {
                                         this.setState({modalVisible: false})
                                         this.refs.userData.getData();
@@ -123,7 +123,7 @@ export default class System extends React.Component {
                                 })
                             } else {
                                 Modal.error({
-                                    title: '添加失败！',
+                                    title: '编辑失败！',
                                 })
                             }
                         }).catch(() => {
@@ -159,14 +159,14 @@ export default class System extends React.Component {
     }
 
     render() {
-        const { breads, title, modalVisible, type } = this.state;
+        const { breads, title, modalVisible, type, data } = this.state;
 
         return (
             <Content>
                 <div className="content">
                     <LoraBread breads={breads} title={title}/>
                     <div className="content-detail">
-                        <TableUser ref="userData" {...this.state.UserTable}/>
+                        <TableUser ref="userData" {...this.state.UserTable} />
                     </div>
                     {modalVisible &&
                         <UserModal
