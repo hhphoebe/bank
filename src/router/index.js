@@ -31,8 +31,6 @@ import StoApply from 'Pages/user/apply/stoClient';
 import Analysis from 'Pages/user/analysis';
 import System from 'Pages/user/system';
 
-
-
 export default class AppRoute extends React.Component {
 
 	render() {
@@ -53,7 +51,7 @@ class User extends React.Component {
 
 	render() {
 		let token = sessionStorage.getItem('token');
-        console.log('token1', token);
+        // console.log('token1', token);
 		if (!token) {
 			return <Redirect to="/login" />
 		}

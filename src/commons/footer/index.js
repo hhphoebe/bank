@@ -1,10 +1,3 @@
-/**
- * FileName: index
- * Auth: Linn
- * Created at: 2018/8/8
- * Description:
- */
-
 import React from 'react';
 import { render } from 'react-dom';
 import { Layout } from 'antd';

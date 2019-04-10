@@ -4,21 +4,21 @@ import { domain } from 'Configs/utils';
 import uploadBack from './ajax/upload';
 
 /**
- * 语音列表
+ * 列表
  */
 const voiceList = (history, data) => {
     return callback(history, `api/v1/voices`, 'get',data)
 }
 
 /**
- * 添加语音
+ * 添加
  */
 const voiceAdd = (history, data, file) => {
     return upload(history, `api/v1/voice`, 'POST', data, file)
 }
 
 /**
- * 删除语音
+ * 删除
  */
 const voiceDelete = (history, data) => {
    return callback(history, `api/v1/voice/${data}`, 'DELETE')
@@ -26,7 +26,7 @@ const voiceDelete = (history, data) => {
 
 
 /**
- *获取语音类型列表
+ *获取
  **/
 
 const voiceTypeList = (history, data) => {
@@ -34,7 +34,7 @@ const voiceTypeList = (history, data) => {
 }
 
 /**
- *获取语音全部类型
+ *获取
  **/
 
 const voiceTypeAllList = (history, data) => {

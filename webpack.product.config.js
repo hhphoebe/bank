@@ -1,9 +1,3 @@
-/**
- * FileName: webpack.config
- * Auth: Linn
- * Created at: 2018/7/30
- * Description:
- */
 require("@babel/polyfill");
 const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");

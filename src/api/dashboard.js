@@ -1,16 +1,5 @@
-/**
- * FileName: dashboard
- * Auth: Linn
- * Created at: 2018/8/9
- * Description:
- */
 import callback from './ajax/callback';
 
-/**
- * 根据Eui来查询网关或者节点
- * @param history
- * @param data
- */
 const queryDevice = (history, data) => {
 	return callback(history, 'api/v1/userinfo/'+data, 'get');
 }

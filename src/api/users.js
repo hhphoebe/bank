@@ -27,7 +27,7 @@ const  UserItem = (history, data) => {
  * 删除用户
  */
 const UserDelete = (history, data) => {
-    return callback(history, `bank/sysUser/delete`, 'POST', data)
+    return callback(history, `bank/sysUser/${data}`, 'get')
 }
 
 

@@ -1,9 +1,3 @@
-/**
- * FileName: admin
- * Auth: Linn
- * Created at: 2018/8/3
- * Description:
- */
 import React from 'react';
 import { render } from 'react-dom';
 import {
@@ -51,7 +45,7 @@ export default class UserHeader extends React.Component {
 						onClick={this.handleClick}
 						className="header-user"
 					>
-						<SubMenu title={<span><Icon type="user" />{sessionStorage.getItem('loginName')}</span>}>
+						<SubMenu title={<span><Icon type="user" />{sessionStorage.getItem('name')}</span>}>
 							<Menu.Item name="out">退出</Menu.Item>
 						</SubMenu>
 					</Menu>

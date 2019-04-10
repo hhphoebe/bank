@@ -1,10 +1,3 @@
-/**
- * FileName: user
- * Auth: Linn
- * Created at: 2018/8/3
- * Created at: 2018/11/30
- * Description:
- */
 import callback from './ajax/callback';
 
 /**

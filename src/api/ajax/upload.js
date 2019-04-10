@@ -1,9 +1,3 @@
-/**
- * FileName: upload
- * Auth: Linn
- * Created at: 2018/8/23
- * Description:
- */
 import { ajax } from 'jquery';
 import { domain } from 'Configs/utils';
 import { Modal } from 'antd';

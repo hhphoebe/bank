@@ -1,9 +1,3 @@
-/**
- * FileName: callback
- * Auth: Linn
- * Created at: 2017/9/7
- * Description:
- */
 import { ajax } from 'jquery';
 import { domain } from 'Configs/utils';
 import { Modal } from 'antd';

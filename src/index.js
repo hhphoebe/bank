@@ -1,9 +1,3 @@
-/**
- * FileName: index
- * Auth: Linn
- * Created at: 2018/7/30
- * Description:
- */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AppRoute from './router/index';
