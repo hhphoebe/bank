@@ -33,9 +33,9 @@ export default class TableUser extends React.Component {
         showSelect: false,
         selectedRowKeys: [],
         selectButtons: [],
-        showSearch: false,
-        // searchValue: null,
-        // searchFields: [],
+        showSearch: true,
+        searchValue: null,
+        search: [],
         searchPlaceholder: '',
         showButtons: false,
         buttonSettings: [],
@@ -60,24 +60,11 @@ export default class TableUser extends React.Component {
         onSelectChange: this.onSelectChange,
         showSearch: this.props.showSearch,
         searchValue: this.props.searchValue,
-        // searchFields: this.props.searchFields,
+        search: this.props.search,
         searchPlaceholder: this.props.searchPlaceholder,
         showButtons: this.props.showButtons,
         buttonSettings: this.props.buttonSettings,
-        fuzzy: this.props.fuzzy||true,
-        // sorter: {
-        //     order: 'descend',
-        //     columnKey: 'createAt',
-        // },
     }
-
-    // handleTableChange =(pagination, filters, sorter)=> {
-    //     if(this.state.sorter.order !== sorter.order) {
-    //         this.setState({ sorter });
-    //         this.getData(undefined,undefined,undefined,undefined,undefined,undefined,undefined,sorter);
-    //     }
-    //
-    // }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.reqChange) {
@@ -90,30 +77,24 @@ export default class TableUser extends React.Component {
 
     getData =(page=this.state.page, pageSize=this.state.pageSize,
               searchValue=this.state.searchValue,
-              req=this.state.req,
-              fuzzy=this.state.fuzzy, status=this.state.status,
-             )=> {
+              search=this.state.search, req=this.state.req,
+              )=> {
         this.setState({ loading: true, page, pageSize });
         req = {...req, page, pageSize};
-        if (fuzzy) {
             if (!!this.state.showSearch&&!!searchValue) {
                 req = {...req, search: searchValue};
             }
-        } else {
-            let searchKey = this.props.searchKey;
-            req[searchKey] = searchValue;
-        }
         this.props.getData(this.props.history, req)
             .then((res)=> {
                 if (!!res) {
                     this.setState({
                         total: res.total,
-                        dataSource: res.list,
+                        dataSource: res.records,
                         loading: false,
                     });
                 } else {
                     Modal.error({
-                        title: !!res?(res==='timeout'?'请求超时':res.msg):'报错，请再次输入',
+                        title: !!res?(res==='timeout'?'请求超时！':res.msg):'请求失败！',
                         onOk: ()=> {
                             this.setState({
                                 loading: false
@@ -124,7 +105,7 @@ export default class TableUser extends React.Component {
             }).catch((res)=> {
             if (res === 'timeout') {
                 Modal.error({
-                    title: '请求超时',
+                    title: '请求超时!',
                     onOk: ()=> {
                         this.setState({ loading: false });
                     }
@@ -133,8 +114,8 @@ export default class TableUser extends React.Component {
                 switch (res.status) {
                     case 401:
                         Modal.confirm({
-                            title: '权限不足或会话超时',
-                            content: '请确认登录或关闭会话',
+                            title: '无权限或者登录已过期！',
+                            content: '请确认登录或关闭会话!',
                             onOk: ()=> {
                                 this.props.history.push('/login');
                             },
@@ -145,7 +126,7 @@ export default class TableUser extends React.Component {
                         break;
                     case 403:
                         Modal.error({
-                            title: '权限不足',
+                            title: '禁止访问!',
                             onOk: ()=> {
                                 this.setState({ loading: false });
                             },
@@ -153,7 +134,7 @@ export default class TableUser extends React.Component {
                         break;
                     case 404:
                         Modal.error({
-                            title: '未找到',
+                            title: '未找到资源!',
                             onOk: ()=> {
                                 this.setState({ loading: false });
                             },
@@ -161,7 +142,7 @@ export default class TableUser extends React.Component {
                         break;
                     default:
                         Modal.error({
-                            title: '报错，请再次输入',
+                            title: '请求失败',
                             onOk: ()=> {
                                 this.setState({ loading: false });
                             },
@@ -191,10 +172,6 @@ export default class TableUser extends React.Component {
     render() {
 
         const { loading, selectedRowKeys } = this.state;
-        const rowSelection = {
-            selectedRowKeys,
-            onChange: this.onSelectChange,
-        };
         return (
             <Spin tip="loading" spinning={loading}>
                 <div className="basic-table" key={this.props.id||'basic'}>
@@ -209,16 +186,16 @@ export default class TableUser extends React.Component {
                                 })
                             }
                         </div>
-                        {/*<div className="search clearfix">*/}
-                            {/*{*/}
-                                {/*this.props.searchLable?*/}
-                                    {/*<span style={{paddingRight: 4}}>{this.props.searchLable}</span>:null*/}
-                            {/*}*/}
-                            {/*<Input.Search placeholder={this.state.searchPlaceholder}*/}
-                                          {/*style={{width: this.props.searchWidth||'200px'}}*/}
-                                          {/*onSearch={(value)=>this.handleSearch(value)}*/}
-                            {/*/>*/}
-                        {/*</div>*/}
+                        <div className="search clearfix">
+                            {
+                                this.props.searchLable?
+                                    <span style={{paddingRight: 4}}>{this.props.searchLable}</span>:null
+                            }
+                            <Input.Search placeholder={this.state.searchPlaceholder}
+                                          style={{width: this.props.searchWidth||'200px'}}
+                                          onSearch={(value)=>this.handleSearch(value)}
+                            />
+                        </div>
                     </div>
                     <div>
                         <div className="actions">
@@ -246,7 +223,7 @@ export default class TableUser extends React.Component {
                            dataSource={this.state.dataSource} />
                 </div>
                 {
-                    !loading&&this.state.dataSource.length<1?
+                    !loading&&Number(this.state.dataSource).length<1?
                         <div className="no-data">
                             <div className="img">
                             </div>
