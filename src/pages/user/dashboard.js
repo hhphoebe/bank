@@ -1,9 +1,3 @@
-/**
- * FileName: dashboard
- * Auth: Linn
- * Created at: 2018/8/7
- * Description:
- */
 import React from 'react';
 import { render } from 'react-dom';
 import { Layout, Row, Col, Icon, Select, Tabs, Badge, message, Modal } from 'antd';
