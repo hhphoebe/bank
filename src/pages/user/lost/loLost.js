@@ -5,11 +5,11 @@ import LoraBread from '../../../commons/breadcrumb';
 
 const { Content } = Layout;
 
-export default class LoanAnalysis extends React.Component {
+export default class LoanLost extends React.Component {
     state = {
         breads: [
             {
-                href: 'analysis',
+                href: 'lost',
                 text: '客户分析'
             }
         ],
