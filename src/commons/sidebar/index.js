@@ -21,10 +21,24 @@ export default class Sidebar extends React.Component {
 					},
 					{
 						href: '/news/loClient',
-						text: '取款用户'
+						text: '贷款用户'
 					}
 				]
 			},
+            {
+                href: '/user/classify',
+                text: '客户分类',
+                children: [
+                    {
+                        href: '/classify/stoclassify',
+                        text: '存储用户'
+                    },
+                    {
+                        href: '/classify/loclassify',
+                        text: '贷款用户'
+                    },
+                ]
+            },
 			{
 				href: '/user/evaluate',
 				text: '客户评级',
@@ -40,8 +54,18 @@ export default class Sidebar extends React.Component {
                 ]
 			},
             {
-                href: '/analysis',
+                href: '/user/analysis',
                 text: '客户分析',
+                children: [
+                    {
+                        href: '/analysis/stoAnalysis',
+                        text: '存储用户'
+                    },
+                    {
+                        href: '/analysis/loAnalysis',
+                        text: '贷款用户'
+                    },
+                ]
             },
             {
                 href: '/user/count',
