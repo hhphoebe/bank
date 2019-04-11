@@ -1,26 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Table, Form, Input, Pagination, Button, Modal, Icon, InputNumber, Spin } from 'antd';
+import { Table, Form, Input, Pagination, Button, Modal, Icon, Spin } from 'antd';
 
 export default class TableUser extends React.Component {
 
     static defaultProps = {
         columns: [
             {
-                title: '姓名',
+                title: 'name',
                 dataIndex: 'name',
                 key: 'name',
             },
             {
-                title: '年龄',
+                title: 'age',
                 dataIndex: 'age',
-                key: 'age',
-            },
-            {
-                title: '住址',
-                dataIndex: 'address',
-                key: 'address',
+                key: 'age'
             }
         ],
         dataSource: [],
@@ -39,6 +34,7 @@ export default class TableUser extends React.Component {
         searchPlaceholder: '',
         showButtons: false,
         buttonSettings: [],
+        status: ""
     }
 
     onSelectChange = (selectedRowKeys, selectedRows) => {
@@ -64,6 +60,7 @@ export default class TableUser extends React.Component {
         searchPlaceholder: this.props.searchPlaceholder,
         showButtons: this.props.showButtons,
         buttonSettings: this.props.buttonSettings,
+        fuzzy: this.props.fuzzy||true,
     }
 
     componentWillReceiveProps(nextProps) {
@@ -78,18 +75,24 @@ export default class TableUser extends React.Component {
     getData =(page=this.state.page, pageSize=this.state.pageSize,
               searchValue=this.state.searchValue,
               search=this.state.search, req=this.state.req,
-              )=> {
+              fuzzy=this.state.fuzzy, status=this.state.status,
+    )=> {
         this.setState({ loading: true, page, pageSize });
         req = {...req, page, pageSize};
+        if(fuzzy) {
             if (!!this.state.showSearch&&!!searchValue) {
                 req = {...req, search: searchValue};
             }
+        } else {
+            let searchKey = this.props.searchKey;
+            req[searchKey] = searchValue;
+        }
         this.props.getData(this.props.history, req)
             .then((res)=> {
                 if (!!res) {
                     this.setState({
                         total: res.total,
-                        dataSource: res.records,
+                        dataSource: res.data.records,
                         loading: false,
                     });
                 } else {
@@ -157,12 +160,21 @@ export default class TableUser extends React.Component {
         this.getData();
     }
 
-    handlePage =(page, pageSize)=> {
-        this.getData(page, pageSize);
+    // handlePage =(page, pageSize)=> {
+    //     this.getData(page, pageSize);
+    // }
+    //
+    // handleSizeChange =(page, pageSize)=> {
+    //     this.getData(page, pageSize);
+    // }
+    handlePage =(page)=> {
+        this.setState({ page: page-1 });
+        this.getData(page-1);
     }
 
-    handleSizeChange =(page, pageSize)=> {
-        this.getData(page, pageSize);
+    handleSizeChange =(a, pageSize)=> {
+        this.setState({ pageSize, page: 0 });
+        this.getData(0, pageSize);
     }
 
     handleSearch =(value)=> {
@@ -170,7 +182,6 @@ export default class TableUser extends React.Component {
         this.getData(undefined, undefined, value);
     }
     render() {
-
         const { loading, selectedRowKeys } = this.state;
         return (
             <Spin tip="loading" spinning={loading}>
@@ -217,13 +228,13 @@ export default class TableUser extends React.Component {
                            pagination={{size: 'small', showSizeChanger: true,
                                showQuickJumper: true, onShowSizeChange: this.handleSizeChange,
                                onChange: this.handlePage, pageSizeOptions: ['5','10','15','20'],
-                               defaultPageSize: 5, defaultCurrent: 1,
+                               defaultPageSize: 5, defaultCurrent: 2,
                                total: this.state.total,
                            }}
                            dataSource={this.state.dataSource} />
                 </div>
                 {
-                    !loading&&Number(this.state.dataSource).length<1?
+                    !loading&&this.state.dataSource.length<1?
                         <div className="no-data">
                             <div className="img">
                             </div>
