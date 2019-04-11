@@ -50,14 +50,14 @@ const callback =(history, url, type, data={}, auth=true, alert=true, extraUrl='?
 			if (res.code === '8001') {
 				return res;//!!res.data?res.data:'success';
 			} else {
-				let title = res.msg || '报错啦, 请再试一次';
-				if (alert) {
-					Modal.error({
-						title: title,
-					});
+                    let title = res.msg || '报错啦, 请再试一次';
+                    if (alert) {
+                        Modal.error({
+                            title: title,
+                        });
+                    }
 				}
 				return null;
-			}
 		}
 	}).catch((res)=> {
 		console.log('catch', res);
@@ -66,7 +66,17 @@ const callback =(history, url, type, data={}, auth=true, alert=true, extraUrl='?
 				Modal.error({
 					title: '请求超时',
 				});
-			} else {
+			}
+			// else if(code === '4001') {
+             //        Modal.error({
+             //            title: '权限不足！',
+             //            content:'点击确定返回登录页面',
+             //            onOk: () => {
+             //                history.push('/login');
+             //            }
+             //        })
+			// }
+			else {
 				switch (res.status) {
 					case 401:
 						if (auth) {
@@ -88,6 +98,10 @@ const callback =(history, url, type, data={}, auth=true, alert=true, extraUrl='?
 					case 403:
 						Modal.error({
 							title: '无权限',
+                            onOk: ()=> {
+                                history.push('/login');
+                            }
+
 						});
 						break;
 					case 400:
@@ -102,7 +116,10 @@ const callback =(history, url, type, data={}, auth=true, alert=true, extraUrl='?
 						break;
 					default:
 						Modal.error({
-							title: '报错啦, 请再试一次',
+							title: '报错啦, 点击返回首页',
+							onOk: () => {
+                                history.push('/login')
+							}
 						});
 						break;
 				}
