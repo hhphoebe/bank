@@ -22,18 +22,17 @@ import StoNews from 'Pages/user/news/sroClient';
 import LoanClassify from 'Pages/user/classify/loClassify';
 import StoClassify from 'Pages/user/classify/stoClassify';
 
-import LoanAnalysis from 'Pages/user/analysis/loAnalysis';
-import StoAnalysis from 'Pages/user/analysis/stoAnalysis';
-
-
 import LoanEva from 'Pages/user/evaluate/loClient';
 import StoEva from 'Pages/user/evaluate/stoClient';
 
 import LoanCount from 'Pages/user/count/loClient';
 import StoCount from 'Pages/user/count/stoClient';
 
-import LoanApply from 'Pages/user/apply/loClient';
-import StoApply from 'Pages/user/apply/stoClient';
+import Money from 'Pages/user/money';
+
+import LoanLost from 'Pages/user/lost/loLost';
+import StoLost from 'Pages/user/lost/stoLost';
+import MoPro from 'Pages/user/lost/mopro';
 
 import System from 'Pages/user/system';
 
@@ -74,14 +73,14 @@ class User extends React.Component {
 							<Route exact path='/news/stoClient' component={StoNews} />
 							<Route exact path='/classify/loClassify' component={LoanClassify} />
 							<Route exact path='/classify/stoClassify' component={StoClassify} />
-							<Route exact path='/analysis/stoAnalysis' component={StoAnalysis} />
-							<Route exact path='/analysis/loAnalysis' component={LoanAnalysis} />
+							<Route exact path='/lost/stoLost' component={StoLost} />
+							<Route exact path='/lost/loLost' component={LoanLost} />
+							<Route exact path='/lost/moPro' component={MoPro} />
 							<Route exact path='/valuate/loClient' component={LoanEva} />
 							<Route exact path='/evaluate/stoClient' component={StoEva} />
 							<Route exact path='/count/loClient' component={LoanCount} />
 							<Route exact path='/count/stoClient' component={StoCount} />
-							<Route exact path='/apply/loClient' component={LoanApply} />
-							<Route exact path='/apply/stoClient' component={StoApply} />
+							<Route exact path='/money' component={Money} />
 							<Route exact path='/system' component={System} />
 						</Switch>
 						<UserFooter />
