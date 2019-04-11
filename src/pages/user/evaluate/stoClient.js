@@ -1,26 +1,130 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Layout} from 'antd';
+import { Layout, Modal } from 'antd';
 import LoraBread from '../../../commons/breadcrumb';
+import { UserList, UserAdd, UserItem, UserDelete  } from 'Api/users';
+import BasicTable from 'Commons/table/basic';
 
 const { Content } = Layout;
 
 export default class StoEva extends React.Component {
+    toAdd = () => {
+        this.setState({ addEvaluate: true })
+    }
+    toEdit = () => {
+        this.setState({ editEvaluate: true })
+    }
+    handleCancel = () => {
+        this.setState({ addEvaluate: false, editEvaluate: false })
+    }
     state = {
         breads: [
             {
                 href: 'evaluate',
-                text: '客户评价'
+                text: '客户评级'
             }
         ],
         title: '存款用户',
+        StoEvaluateTable: {
+            rowKey: 'id',
+            columns: [
+                {
+                    title: '账号',
+                    dataIndex: 'loginName',
+                    key: 'loginName'
+                },
+                {
+                    title: '创建时间',
+                    dataIndex: 'gmtCreate',
+                    key: 'gmtCreate'
+                },
+                {
+                    title: '登录IP',
+                    dataIndex: 'lastIp',
+                    key: 'lastIp'
+                },
+                {
+                    title: '登录时间',
+                    dataIndex: 'lastTime',
+                    key: 'lastTime'
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'Operating',
+                    key: 'Operating',
+                    render: (a, item, index) => {
+                        return (
+                            <div className="action-list" key={item.loginName + 'opara' + index}>
+                                <a href="javascript:;" onClick={this.toEdit.bind(this, item)}>编辑</a>
+                                <a href="javascript:;" onClick={this.toDelete.bind(this, item.id)}>删除</a>
+                            </div>
+                        )
+                    }
+                }
+            ],
+            getData: UserList,
+            showButtons: true,
+            buttonSettings: [
+                {
+                    text: '添加',
+                    type: 'primary',
+                    onClick: this.toAdd
+                },
+            ],
+            search: "",
+            searchPlaceholder: '搜索',
+            history: this.props.history,
+            page: 1,
+            pageSize: 5,
+        },
+        stoEvaluateData: {},
+        data: {},
+        addEvaluate: false,
+        editEvaluate: false,
+    }
+    addStorage = () => {
+
+    }
+    editStorage = () => {
+
+    }
+    toDelete = () => {
+
     }
     render() {
-        const { breads, title } = this.state;
+        const { breads, title, StoEvaluateTable, stoEvaluateData, addEvaluate, editEvaluate } = this.state;
         return (
             <Content>
                 <div className="content">
                     <LoraBread breads={breads} title={title}/>
+                    <div className="content-detail">
+                        <BasicTable ref='stoEvaluateData' {...StoEvaluateTable}/>
+                    </div>
+                    <Modal visible={addEvaluate}
+                           title="添加评级"
+                           maskClosweable={false}
+                           width={600}
+                           centered={true}
+                           onCancel={this.handleCancel}
+                           onOk={this.addStorage}
+                           destroyOnClose={true}
+                           okText="确定"
+                           cancelText="取消"
+                    >
+
+                    </Modal>
+                    <Modal visible={editEvaluate}
+                           title="编辑评级"
+                           maskClosweable={false}
+                           width={600}
+                           centered={true}
+                           onCancel={this.handleCancel}
+                           onOk={this.editStorage}
+                           destroyOnClose={true}
+                           okText="确定"
+                           cancelText="取消">
+
+                    </Modal>
                 </div>
             </Content>
         )

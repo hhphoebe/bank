@@ -41,12 +41,12 @@ export default class System extends React.Component {
                     key: 'gmtCreate'
                 },
                 {
-                    title: '前次登录ip',
+                    title: '登录IP',
                     dataIndex: 'lastIp',
                     key: 'lastIp'
                 },
                 {
-                    title: '前次登录时间',
+                    title: '登录时间',
                     dataIndex: 'lastTime',
                     key: 'lastTime'
                 },
