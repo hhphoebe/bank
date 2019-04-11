@@ -40,7 +40,7 @@ const UserModal = ({ form, type, record, onOk, ...restProps }) => {
                             },
                         ],
                     })(
-                        <Input placeholder="用户名" readOnly={type === '添加'?false:true}/>
+                        <Input placeholder="用户名" />
                     )}
                 </Form.Item>
                 <Form.Item {...layout}
