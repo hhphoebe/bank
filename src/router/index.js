@@ -19,6 +19,10 @@ import Dashboard from 'Pages/user/dashboard';
 import LoanNews from 'Pages/user/news/loClient';
 import StoNews from 'Pages/user/news/sroClient';
 
+import LoanClassify from 'Page/user/loclassify';
+import StoClassify from 'Page/user/stoclassify';
+
+
 import LoanEva from 'Pages/user/evaluate/loClient';
 import StoEva from 'Pages/user/evaluate/stoClient';
 
@@ -66,6 +70,8 @@ class User extends React.Component {
                             <Route exact path='/dashboard' component={Dashboard} />
 							<Route exact path='/news/loClient' component={LoanNews} />
 							<Route exact path='/news/stoClient' component={StoNews} />
+							<Route exact path='/classify/loclassify' component={LoanClassify} />
+							<Route exact path='/classify/stoclassify' component={StoClassify} />
 							<Route exact path='/evaluate/loClient' component={LoanEva} />
 							<Route exact path='/evaluate/stoClient' component={StoEva} />
 							<Route exact path='/count/loClient' component={LoanCount} />
