@@ -41,7 +41,7 @@ export default class Sidebar extends React.Component {
             },
 			{
 				href: '/user/evaluate',
-				text: '客户评级',
+				text: '评价分析',
                 children: [
                     {
                         href: '/evaluate/stoClient',
@@ -49,24 +49,10 @@ export default class Sidebar extends React.Component {
                     },
                     {
                         href: '/evaluate/loClient',
-                        text: '取款用户'
-                    },
-                ]
-			},
-            {
-                href: '/user/analysis',
-                text: '客户分析',
-                children: [
-                    {
-                        href: '/analysis/stoAnalysis',
-                        text: '存储用户'
-                    },
-                    {
-                        href: '/analysis/loAnalysis',
                         text: '贷款用户'
                     },
                 ]
-            },
+			},
             {
                 href: '/user/count',
                 text: '客户统计',
@@ -77,22 +63,30 @@ export default class Sidebar extends React.Component {
                     },
                     {
                         href: '/count/loClient',
-                        text: '取款用户'
+                        text: '贷款用户'
                     },
 				]
             },
             {
-                href: '/user/apply',
-                text: '客户应用',
+                href: '/money',
+                text: '客户理财'
+            },
+            {
+                href: '/user/lost',
+                text: '客户流失',
                 children: [
                     {
-                        href: '/apply/stoClient',
+                        href: '/lost/stoLost',
                         text: '存储用户'
                     },
                     {
-                        href: '/apply/loClient',
-                        text: '取款用户'
+                        href: '/lost/loLost',
+                        text: '贷款用户'
                     },
+                    {
+                        href: '/lost/moPro',
+                        text: '理财产品客户'
+                    }
                 ]
             },
 			{

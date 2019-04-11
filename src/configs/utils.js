@@ -1,11 +1,4 @@
 /**
- * FileName: utils
- * Auth: Linn
- * Created at: 2018/8/3
- * Description:
- */
-
-/**
  * 服务器请求地址
  */
 const domain = requestUrl;

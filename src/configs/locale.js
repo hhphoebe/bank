@@ -1,10 +1,3 @@
-/**
- * FileName: locale
- * Auth: Linn
- * Created at: 2017/9/4
- * Description:
- */
-
 export default Locale = {
 	response: {
 		'8000': 'Successful operation！',
