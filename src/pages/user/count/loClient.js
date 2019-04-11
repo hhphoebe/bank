@@ -24,7 +24,7 @@ export default class LoanCount extends React.Component {
                 text: '统计'
             }
         ],
-        title: '取款用户统计',
+        title: '贷款用户统计',
         CountTable: {
             rowKey: 'id',
             columns: [

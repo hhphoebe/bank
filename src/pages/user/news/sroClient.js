@@ -1,30 +1,38 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Layout, Table, Form, Input, Checkbox, Pagination, Button, Modal, Upload, Icon} from 'antd';
+import { Upload, Layout, Tabs, Switch, Modal, Button, Row, Col, Form, Input, Select, Icon, message } from 'antd';
 import LoraBread from '../../../commons/breadcrumb';
-import { UserList, UserAdd, UserItem, UserDelete  } from 'Api/users';
 import BasicTable from 'Commons/table/basic';
-import {domain} from 'Configs/utils';
+import { UserList, UserAdd, UserItem, UserDelete  } from 'Api/users';
 
 const { Content } = Layout;
-const { TextArea } = Input;
 
- class StoNews extends React.Component {
-    toAdd = ()  => {
-        this.setState({ addNews: true })
+export default class StoClient extends React.Component {
+    toAdd = () => {
+        this.setState({ add: true })
     }
-    toEdit = () => {
-        this.setState({ editNews: true })
+    toEdit = (item, type) => {
+        if(type==='one') {
+            this.setState({
+                edit: true
+            })
+        } else {
+            this.setState({
+                edit: true
+            })
+        }
     }
     state = {
         breads: [
             {
-                href: 'news',
-                text: '客户信息'
+                href: 'lost',
+                text: '客户分析'
             }
         ],
         title: '存款用户',
-        StoNewsTable: {
+        type: 'one',
+        oneTable: {
+            id: 'one',
             rowKey: 'id',
             columns: [
                 {
@@ -54,8 +62,8 @@ const { TextArea } = Input;
                     render: (a, item, index) => {
                         return (
                             <div className="action-list" key={item.loginName + 'opara' + index}>
-                                <a href="javascript:;" onClick={this.toEdit.bind(this, item)}>编辑</a>
-                                <a href="javascript:;" onClick={this.toDelete.bind(this, item.id)}>删除</a>
+                                <a href="javascript:;" onClick={this.toEdit.bind(this, item,'one')}>编辑</a>
+                                <a href="javascript:;" >删除</a>
                             </div>
                         )
                     }
@@ -76,130 +84,140 @@ const { TextArea } = Input;
             page: 1,
             pageSize: 5,
         },
-        stoNewsData: {},
-        data: {},
-        addNews: false,
-        editNews: false,
-    }
-    addStorage = (e) => {
-        e.preventDefault()
-        this.props.form.validateFields((err, values) => {
-            if(!err) {
-                Modal.confirm({
-                    title: "确定添加吗？",
-                    onOk: () => {
-                        UserAdd(this.props.history, values)
-                            .then((res) => {
-                                if(!!res) {
-                                    Modal.success({
-                                        title: '添加成功！',
-                                        onOk: () => {
-                                            this.setState({ addNews:false }),
-                                                this.refs.stoNewsData.getData();
-                                        }
-                                    });
-                                } else {
-                                    Modal.error({
-                                        title: '添加失败！'
-                                    })
-                                }
-                            }).catch(() => {
-                            console.log('catch back')
-                        })
+
+        twoTable: {
+            id: 'two',
+            rowKey: 'id',
+            columns: [
+                {
+                    title: '账号',
+                    dataIndex: 'loginName',
+                    key: 'loginName'
+                },
+                {
+                    title: '创建时间',
+                    dataIndex: 'gmtCreate',
+                    key: 'gmtCreate'
+                },
+                {
+                    title: '登录IP',
+                    dataIndex: 'lastIp',
+                    key: 'lastIp'
+                },
+                {
+                    title: '登录时间',
+                    dataIndex: 'lastTime',
+                    key: 'lastTime'
+                },
+                {
+                    title: '操作',
+                    dataIndex: 'Operating',
+                    key: 'Operating',
+                    render: (a, item, index) => {
+                        return (
+                            <div className="action-list" key={item.loginName + 'opara' + index}>
+                                <a href="javascript:;" onClick={this.toEdit.bind(this, item, 'two')}>编辑</a>
+                                <a href="javascript:;" >删除</a>
+                            </div>
+                        )
                     }
-                })
-            }
-        })
+                }
+            ],
+            getData: UserList,
+            showButtons: true,
+            buttonSettings: [
+                {
+                    text: '添加',
+                    type: 'primary',
+                    onClick: this.toAdd
+                },
+            ],
+            search: "",
+            searchPlaceholder: '搜索',
+            history: this.props.history,
+            page: 1,
+            pageSize: 5,
+        },
+        add: false,
+        edit: false,
 
     }
-     editStorage = (item) => {
+    handleTab =(type)=> {
+        this.setState({ type });
+    }
+    handleOne = () => {
 
-     }
-     toDelete = (item) => {
-         Modal.confirm({
-             title: '确定要删除么!',
-             onOk: () => {
-                 UserDelete(this.props.history, item)
-                     .then((res) => {
-                         if (!!res) {
-                             Modal.success({
-                                 title: '删除成功！',
-                                 onOk: () => {
-                                     this.refs.stoNewsData.getData();
-                                 }
-                             });
-                         }else {
-                             Modal.error({
-                                 title: '删除失败！',
-                             })
-                         }
-                     }) .catch(() => {
-                     console.log('catch back');
-                 })
-             }
-         })
-     }
+    }
+    handleTwo = () => {
+
+    }
+    handleEditOne = () => {
+
+    }
+    handleEditTwo = () => {
+
+    }
     handleCancel = () => {
-        this.setState({ addNews: false, editNews: false })
+        this.setState({ add: false, edit: false })
     }
+
     render() {
-        const { breads, title,addNews, editNews  } = this.state;
-        const { getFieldDecorator } = this.props.form;
-        const uploadProps = {};
-        const layout = {
-            labelCol: {
-                xs: { span: 16 },
-                sm: { span: 5 }
-            },
-            wrapperCol: {
-                xs: {span: 16},
-                sm: {span: 19}
-            }
-        }
+        const { breads, title, oneTable, type, twoTable, add, edit } = this.state;
         return (
             <Content>
                 <div className="content">
                     <LoraBread breads={breads} title={title}/>
-                    <div className="content-detail">
-                        <BasicTable ref='stoNewsData' {...this.state.StoNewsTable}/>
+                    <div className="title">
+                        {/*{type === 'true'? '信用评级':'评价'}*/}
                     </div>
-                    <Modal visible={addNews}
-                           title="添加信息"
-                           maskClosweable={false}
-                           width={600}
-                           centered={true}
+                    <div className="content-detail">
+                        <div className="dashboard">
+                            <Tabs activeKey={type} onChange={this.handleTab}>
+                                <Tabs.TabPane tab='客户业务管理' key='one'>
+                                    <BasicTable ref="one" {...oneTable}/>
+                                </Tabs.TabPane>
+                                <Tabs.TabPane tab='客户等级分类管理' key='two'>
+                                    <BasicTable ref="two" {...twoTable}/>
+                                </Tabs.TabPane>
+                            </Tabs>
+                        </div>
+                    </div>
+                    <Modal ref="addone"
+                           centered
+                           visible={add&&type === 'one'}
+                           title='添加'
+                           onOk={this.handleOne}
                            onCancel={this.handleCancel}
-                           onOk={this.addStorage}
-                           destroyOnClose={true}
                            okText="确定"
                            cancelText="取消">
-                        <Form.Item label="添加"
-                                   {...layout}>
-                            {getFieldDecorator('fileList', {
-                                rules: [
-                                    {
-                                        required: true, message: '请上传!'
-                                    },
-                                ]
-                            })(
-                                <Upload {...uploadProps}>
-                                    <Button>
-                                        <Icon type="upload"/>
-                                       请上传
-                                    </Button>
-                                </Upload>
-                            )}
-                            <span className="Audio-pag">支持文本文件</span>
-                        </Form.Item>
+
                     </Modal>
-                    <Modal visible={editNews}
-                           title="编辑信息"
-                           maskClosweable={false}
-                           width={600}
-                           centered={true}
+                    <Modal ref="addtwo"
+                           centered
+                           visible={add&&type === 'two'}
+                           title='添加'
+                           onOk={this.handleTwo}
                            onCancel={this.handleCancel}
-                           onOk={this.editStorage}
-                           destroyOnClose={true}
+                           okText="确定"
+                           cancelText="取消">
+
+                    </Modal>
+                    <Modal ref="editone"
+                           centered
+                           visible={edit&&type === 'one'}
+                           title='编辑'
+                           onOk={this.handleEditOne}
+                           onCancel={this.handleCancel}
+                           okText="确定"
+                           cancelText="取消">
+
+                    </Modal>
+                    <Modal ref="edittwo"
+                           centered
+                           visible={edit&&type === 'two'}
+                           title='编辑'
+                           onOk={this.handleEditTwo}
+                           onCancel={this.handleCancel}
                            okText="确定"
                            cancelText="取消">
 
@@ -209,5 +227,3 @@ const { TextArea } = Input;
         )
     }
 }
-
-export default Form.create()(StoNews)
