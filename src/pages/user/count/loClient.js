@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Layout, Table, Form, Modal } from 'antd'
 import LoraBread from "../../../commons/breadcrumb";
-import UserTable from 'Commons/table/userTable';
+import BasicTable from 'Commons/table/basic';
 import { UserList } from 'Api/users';
 
 const { Content } = Layout;
@@ -68,7 +68,7 @@ export default class LoanCount extends React.Component {
                    <div className="content">
                        <LoraBread breads={breads} title={title}/>
                        <div className="content-detail">
-                           <UserTable ref="userData" {...CountTable}/>
+                           <BasicTable ref="userData" {...CountTable}/>
                        </div>
                        <Modal visible={addCount}
                               title={'添加账户'}
