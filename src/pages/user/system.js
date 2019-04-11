@@ -4,6 +4,7 @@ import { Layout, Table, Form, Input, Checkbox, Pagination, Button, Modal } from 
 import LoraBread from 'Commons/breadcrumb/index';
 import { UserList, UserAdd, UserItem, UserDelete  } from 'Api/users';
 import TableUser from 'Commons/table/userTable';
+import {domain} from 'Configs/utils';
 import UserModal from './UserModal';
 
 const { Content } = Layout;
@@ -36,9 +37,18 @@ export default class System extends React.Component {
                     key: 'loginName'
                 },
                 {
+                    title: '用户角色',
+                    dataIndex: 'role',
+                    key: 'role',
+                    width: 120,
+                    render: (a) => {
+                        return a === '1'?'超级管理员':'普通管理员'
+                    }
+                },
+                {
                     title: '创建时间',
                     dataIndex: 'gmtCreate',
-                    key: 'gmtCreate'
+                    key: 'gmtCreate',
                 },
                 {
                     title: '登录IP',
@@ -57,8 +67,8 @@ export default class System extends React.Component {
                     render: (a, item, index) => {
                         return (
                             <div className="action-list" key={item.loginName + 'opara' + index}>
-                                <a href="javascript:;" onClick={this.toEdit.bind(this, item)}>编辑</a>
-                                <a href="javascript:;" onClick={this.toDelete.bind(this, item.id)}>删除</a>
+                                <a href="javascript:;" onClick={this.toEdit.bind(this, item)}>{item.role === '1'?'':'编辑'}</a>
+                                <a href="javascript:;" onClick={this.toDelete.bind(this, item.id)}>{item.role === '1'?'':'删除'}</a>
                             </div>
                         )
                     }
@@ -101,10 +111,6 @@ export default class System extends React.Component {
                                         this.refs.userData.getData();
                                     }
                                 })
-                            } else {
-                                Modal.error({
-                                    title: '添加失败'
-                                })
                             }
                         }).catch(() => {
                             console.log('返回上级')
@@ -120,10 +126,6 @@ export default class System extends React.Component {
                                         this.setState({modalVisible: false})
                                         this.refs.userData.getData();
                                     }
-                                })
-                            } else {
-                                Modal.error({
-                                    title: '编辑失败！',
                                 })
                             }
                         }).catch(() => {
