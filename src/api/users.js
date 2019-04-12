@@ -26,7 +26,7 @@ const  UserItem = (history, data) => {
 /**
  * 删除用户
  */
-const UserDelete = (history, data) => {
+const UserDelete = (history, data, ) => {
     return callback(history, `bank/sysUser/delete?userId=${data}`, 'get')
 }
 

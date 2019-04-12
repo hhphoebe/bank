@@ -114,12 +114,9 @@ export default class System extends React.Component {
                                 })
                             }
                         }).catch(() => {
-                            console.log('返回上级')
+                            console.log('catch back')
                     })
                 } else {
-                    const id = this.state.data.id;
-                    console.log('id',id);
-                    // delete values.id;
                     UserItem(this.props.history, values)
                         .then((res) => {
                             if (!!res) {
@@ -134,7 +131,7 @@ export default class System extends React.Component {
                                 this.setState()
                             }
                         }).catch(() => {
-                        console.log('返回');
+                        console.log('catch back');
                     })
                 }
             }
@@ -142,7 +139,7 @@ export default class System extends React.Component {
     }
     toDelete = (item) => {
         Modal.confirm({
-            title: '确定要删除么!',
+            title: '确定要删除吗？',
             onOk: () => {
                 UserDelete(this.props.history, item)
                     .then((res) => {
@@ -153,10 +150,6 @@ export default class System extends React.Component {
                                     this.refs.userData.getData();
                                 }
                             });
-                        }else {
-                            Modal.error({
-                                title: '删除失败！',
-                            })
                         }
                     }) .catch(() => {
                     console.log('catch back');
