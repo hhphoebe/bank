@@ -14,6 +14,7 @@ export default class System extends React.Component {
         this.setState({ modalVisible: true, type: '添加'});
     }
     toEdit = (item) => {
+        console.log('item', item)
         this.setState({ modalVisible: true, type: '编辑', data: item })
     }
     handleCancel =() => {
@@ -117,7 +118,9 @@ export default class System extends React.Component {
                     })
                 } else {
                     const id = this.state.data.id;
-                    UserItem(this.props.history, values, id)
+                    console.log('id',id);
+                    // delete values.id;
+                    UserItem(this.props.history, values)
                         .then((res) => {
                             if (!!res) {
                                 Modal.success({
@@ -127,6 +130,8 @@ export default class System extends React.Component {
                                         this.refs.userData.getData();
                                     }
                                 })
+                            } else {
+                                this.setState()
                             }
                         }).catch(() => {
                         console.log('返回');

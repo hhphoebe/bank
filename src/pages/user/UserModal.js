@@ -55,6 +55,14 @@ const UserModal = ({ form, type, record, onOk, ...restProps }) => {
                         <Input  type="password" placeholder="密码"/>
                     )}
                 </Form.Item>
+                <Form.Item {...layout}  style={{display:'none'}}
+                           label={(<span>id</span>)}>
+                    {getFieldDecorator('id', {
+                        initialValue: record.id
+                    })(
+                        <Input/>
+                    )}
+                </Form.Item>
             </Form>
         </Modal>
     )
